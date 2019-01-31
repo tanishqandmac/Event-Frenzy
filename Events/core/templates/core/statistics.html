@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h1>
+  <strong>Statistics</strong>
+  <span class="float-right">
+    <a href = "{% url 'core:index' %}" role="button" class="btn btn-outline-info">Customer List</a>
+    <a href = "{% url 'core:index' %}" role="button" class="btn btn-outline-danger">Go Back</a>
+  </span>
+</h1>
+<hr>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card border border-info">
+      <div class="card-body">
+        <h2 class="card-title"><strong>Revenue<span class="float-right">$3030</span></strong></h2>
+        <hr class="bg bg-info">
+        <p class="card-text text-center">
+          <strong>{{Event.Start_Date}} - {{Event.End_Date}}</strong>
+          <br><br><br><br><br><br><br><br><br><br><br>
+          <hr>
+          <strong>Gross Sales </strong> <span class="float-right">$3030</span>
+          <hr>
+          <strong>Refunds </strong> <span class="float-right">-$94</span>
+          <hr>
+          <strong>Tickets Sold </strong> <span class="float-right">894</span>
+          <hr>
+        </p>
+        <br>
+      </div>
+    </div>
+    <br>
+  </div>
+  <br>
+  <div class="col-md">
+    <div class="card shadow-sm border border-info">
+      <div class="card-body">
+        <h2 class="card-title"><strong>Tickets Sold<span class="float-right">894</span></strong></h2>
+        <hr class="bg bg-info">
+        <p class="card-text text-center">
+          <strong>{{Event.Start_Date}} - {{Event.End_Date}}</strong>
+          <hr>
+          <strong>Gold</strong> <span class="float-right">34/100</span>
+          <hr>
+          <strong>Diamond </strong> <span class="float-right">50/200</span>
+          <hr>
+          <strong>Platinum </strong> <span class="float-right">178/300</span>
+          <hr>
+        </p>
+        <br>
+      </div>
+    </div>
+    <br>
+  </div>
+  <br>
+  <div class="col-md">
+    <div class="card shadow-sm border border-info">
+      <div class="card-body">
+        <h2 class="card-title"><strong>Link Clicks<span class="float-right">34</span></strong></h2>
+        <hr class="bg bg-info">
+        <p class="card-text text-center">
+          <strong>{{Event.Start_Date}} - {{Event.End_Date}}</strong>
+          <hr>
+          <strong>Mobile </strong> <span class="float-right">34</span>
+          <hr>
+          <strong>Desktop </strong> <span class="float-right">56</span>
+          <hr>
+          <strong>Other </strong> <span class="float-right">100</span>
+          <hr>
+        </p>
+        <br>
+      </div>
+    </div>
+    <br>
+  </div>
+</div>
+{% endblock %}
