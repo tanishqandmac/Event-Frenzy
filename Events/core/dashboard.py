@@ -54,8 +54,8 @@ def dashboard(request):
             tickets_sold = tickets.count()
             revenue = sum([ticket.price for ticket in tickets])
             event_details = {'Name':event_name,
-                             'Start_Date':start_date,
-                             'End_Date':end_date,
+                             'Start_Date':date_to_string([str(start_date)]),
+                             'End_Date':date_to_string([str(end_date)]),
                              'Tickets_Sold':tickets_sold,
                              'Revenue':revenue}
             event_details_list.append(event_details)
@@ -66,6 +66,19 @@ def dashboard(request):
         print(traceback.format_exc())
         return render(request,"core/error.html",{})
 
+def date_to_string(dates):
+    date = datetime.strptime(dates[0].split(" ")[0], '%Y-%m-%d')
+    date = str(date.strftime('%B %d, %Y'))
+    try:
+        if dates[1].split(" ")[0] != dates[0].split(" ")[0]:
+            date2 = datetime.strptime(dates[1].split(" ")[0], '%Y-%m-%d')
+            date2 = str(date2.strftime('%B %d, %Y'))
+            date = date + " - " + date2
+    except:
+        pass
+    return date
+
+#To be used in Production
 def dashboard1(request):
     with request.user.session:
         try:
