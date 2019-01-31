@@ -37,28 +37,30 @@
     </h2>
     <hr>
     <div class="row">
-  {% for events in Events %}
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+      {% for Event in Events %}
+      <div class="col-lg-4 col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title text-center">{{Event.Name}}</h2>
+            <hr class="bg bg-danger">
+            <p class="card-text text-center">
+              <strong>{{Event.Start_Date}} - {{Event.End_Date}}</strong>
+              <hr>
+              <strong>Revenue </strong> <span class="float-right">${{Event.Revenue}}</span>
+              <hr>
+              <strong>Tickets Sold </strong> <span class="float-right">{{Event.Tickets_Sold}}</span>
+            <hr>
+            </p>
+            <br>
+            <center><a href="#" class="btn btn-danger">View Statistics</a></center>
+          </div>
+        </div>
+        <br>
+      </div>
+      <br>
+      {% endfor %}
       </div>
     </div>
-  </div>
-  {% endfor %}
-  
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
+    <br>
 </body>
 </html>

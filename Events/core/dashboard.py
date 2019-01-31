@@ -20,25 +20,25 @@ def dashboard(request):
         Events.objects.all().delete()
         Tickets.objects.all().delete()
         Customers.objects.all().delete()
-
         user = Users(domain_name="believer")
         user.save()
-        user = Users.objects.get(domain_name = "believer")
-        event = Events(sno = user,
-                        event_name = "Dragons",
-                        start_date = "2019-01-28",
-                        end_date = "2019-01-31")
-        event.save()
-        event = Events.objects.filter(sno = user)
-        tickets = Tickets(sno = event[0],
-                          type = "Gold",
-                          price = 100.0)
-        tickets.save()
-        tickets = Tickets.objects.filter(sno = event[0])
-        customer = Customers(sno = tickets[0],
-                            customer_name = "tanishq",
-                            customer_email = "tanishqandmac@gmail.com")
-        customer.save()
+        for i in range(10):
+            user = Users.objects.get(domain_name = "believer")
+            event = Events(sno = user,
+                            event_name = "Dragons {}".format(i),
+                            start_date = "2019-01-28",
+                            end_date = "2019-01-31")
+            event.save()
+            event = Events.objects.filter(sno = user)
+            tickets = Tickets(sno = event[i],
+                              type = "Platinum",
+                              price = 3000.0 + float(i))
+            tickets.save()
+            tickets = Tickets.objects.filter(sno = event[i])
+            customer = Customers(sno = tickets[0],
+                                customer_name = "tanishq",
+                                customer_email = "tanishqandmac@gmail.com")
+            customer.save()
 
         #domain_name = str(request.user).split(".")[0]
         domain_name = "believer"
