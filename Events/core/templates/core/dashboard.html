@@ -16,11 +16,13 @@
           <h2 class="card-title text-center">{{Event.Name}}</h2>
           <hr class="bg bg-danger">
           <p class="card-text text-center">
-            <strong>{{Event.Start_Date}} - {{Event.End_Date}}</strong>
-            <hr>
-            <strong>Revenue </strong> <span class="float-right">${{Event.Revenue}}</span>
+            <div class="badge badge-light" style ="padding:5px;width:100%;">
+              <h6><span class="float-center">{{Event.Start_Date}}</span></h6>
+            </div>
             <hr>
             <strong>Tickets Sold </strong> <span class="float-right">{{Event.Tickets_Sold}}</span>
+            <hr>
+            <strong>Revenue </strong> <span class="float-right">${{Event.Revenue}}</span>
             <hr>
             </p>
             <br>
