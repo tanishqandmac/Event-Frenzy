@@ -3,7 +3,7 @@
   <h2>
   <strong> Dashboard</strong>
   <span class="float-right">
-    <a href = "{% url 'core:index' %}" role="button" class="btn btn-warning">Create Event</a>
+    <a href = "{% url 'core:statistics' %}" role="button" class="btn btn-info">Create Event</a>
   </span>
   </h2>
   <hr>
@@ -24,7 +24,7 @@
             <hr>
             </p>
             <br>
-          <center><a href="#" class="btn btn-danger">View Statistics</a></center>
+          <center><a href="{% url 'core:statistics' %}" class="btn btn-danger">View Statistics</a></center>
         </div>
       </div>
       <br>

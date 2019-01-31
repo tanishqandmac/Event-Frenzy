@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h1>
+  <strong>Customers </strong>
+  <span class="float-right">
+    <a href = "{% url 'core:statistics' %}" role="button" class="btn btn-danger">Go Back</a>
+  </span>
+</h1>
+<hr>
+<br>
+<table id="example" class="table table-striped table-bordered rounded shadow-lg" style="width:100%">
+  <thead class="bg-info text-white">
+    <tr>
+      <th>S.No</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Category</th>
+      <th>Ticket</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Tanishq</td>
+      <td>tanishqandmac@gmail.com</td>
+      <td>9582750035</td>
+      <td>Gold</td>
+      <td><center><a href = "{% url 'core:dashboard' %}" role="button" class="btn btn-primary">Resend Ticket</a><center></td>
+    </tr>
+    {% for Product in Products %}
+    <tr>
+      <td>{{Product.SKU}}</td>
+      <td>{{Product.Name}}</td>
+      <td>{{Product.Variant}}</td>
+      <td>{{Product.Quantity}}</td>
+      <td>{{Product.Quantity}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<hr>
+<center>
+<a href = "{% url 'core:dashboard' %}" role="button" class="btn btn-danger">Send to my Mail</a>
+</center>
+{% endblock %}

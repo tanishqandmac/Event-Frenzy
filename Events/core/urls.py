@@ -1,5 +1,5 @@
 from django.urls import path,include
-from core import views,dashboard,statistics
+from core import views,dashboard,statistics,customers
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('Dashboard', dashboard.dashboard, name="dashboard"),
     path('Statistics', statistics.statistics, name="statistics"),
+    path('Customers', customers.customers, name="customers"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
