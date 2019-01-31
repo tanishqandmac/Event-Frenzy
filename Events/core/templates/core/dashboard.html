@@ -11,7 +11,7 @@
   <div class="row">
     {% for Event in Events %}
     <div class="col-lg-4 col-sm-4">
-      <div class="card shadow-sm border border-danger">
+      <div class="card shadow-sm border border-dark">
         <div class="card-body">
           <h2 class="card-title text-center">{{Event.Name}}</h2>
           <hr class="bg bg-danger">
@@ -24,7 +24,7 @@
             <hr>
             </p>
             <br>
-          <center><a href="{% url 'core:statistics' %}" class="btn btn-danger">View Statistics</a></center>
+          <center><a href="{% url 'core:statistics' %}" class="btn btn-danger btn-block">View Statistics</a></center>
         </div>
       </div>
       <br>
