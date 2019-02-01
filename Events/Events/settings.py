@@ -76,8 +76,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'shopify_auth.context_processors.shopify_auth',
-                'core.context_processor.get_current_path',
-
             ],
         },
     },

@@ -9,14 +9,20 @@ class Users(models.Model):
     domain_name = models.CharField(max_length = 100, unique = True)
     flag = models.IntegerField(default = -1)
     def __str__(self):
-        return (str(self.domainName))
+        return (str(self.domain_name))
 
 class Events(models.Model):
     sno = models.ForeignKey(Users, on_delete=models.CASCADE)
     event_id = models.AutoField(primary_key=True)
     event_name = models.CharField(max_length = 300)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    location    = models.TextField(default="New Delhi")
+    description = models.TextField(default="NA")
+    start_date  = models.DateField(auto_now=False,auto_now_add=False,default="1997-01-23")
+    end_date    = models.DateField(auto_now=False,auto_now_add=False,default="1997-01-23")
+    start_time  = models.TimeField(auto_now=False,auto_now_add=False,default="10:10")
+    end_time    = models.TimeField(auto_now=False,auto_now_add=False,default="10:10")
+    inventory   = models.IntegerField(default=0)
+    price       = models.DecimalField(max_digits=19,decimal_places=3,default=0.000)
 
 class Tickets(models.Model):
     sno = models.ForeignKey(Events, on_delete=models.CASCADE)
