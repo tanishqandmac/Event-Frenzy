@@ -4,6 +4,8 @@ from shopify_auth.decorators import login_required
 from shopify_auth.models import AbstractShopUser, ShopUserManager
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from django.db.models import Sum
 from django.contrib import auth
@@ -30,7 +32,7 @@ def statistics(request):
                             start_date = "2019-01-28",
                             end_date = "2019-01-31")
             event.save()
-        events = Events.obejects.filter(sno=user)
+        events = Events.objects.filter(sno=user)
         for e in events:
             for i in range(10):
                 tickets = Tickets(sno = e,
@@ -57,7 +59,7 @@ def statistics(request):
             tickets = Tickets.objects.filter(sno=event)
             tickets_sold = tickets.count()
             revenue = sum([ticket.price for ticket in tickets])
-            
+
             names='Tickets Sold', 'Inventory',
             size=[tickets_sold,inventory-tickets_sold]
             my_circle=plt.Circle( (0,0), 0.7, color='white')

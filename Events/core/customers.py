@@ -16,72 +16,28 @@ import os
 
 def customers(request):
     try:
-        Users.objects.all().delete()
-        Events.objects.all().delete()
-        Tickets.objects.all().delete()
-        Customers.objects.all().delete()
-        user = Users(domain_name="believer")
-        user.save()
-        user = Users.objects.get(domain_name = "believer")
-        for i in range(10):
-            event = Events(sno = user,
-                            event_name = "Dragons {}".format(i),
-                            start_date = "2019-01-28",
-                            end_date = "2019-01-31")
-            event.save()
-        events = Events.obejects.filter(sno=user)
-        for e in events:
-            for i in range(10):
-                tickets = Tickets(sno = e,
-                                type = "Platinum",
-                                price = 3000.0 + float(i))
-                tickets.save()
-                for k in range(10):
-                    customer = Customers(sno = tickets,
-                                        customer_name = "tanishq",
-                                        customer_email = "tanishqandmac@gmail.com")
-                    customer.save()
+        customers_list = []
+        event_id = request.GET.get('event_id', '')
 
-        #domain_name = str(request.user).split(".")[0]
-        domain_name = "believer"
-        userObject = Users.objects.get(domain_name = domain_name)
-        events = Events.objects.filter(sno = userObject)
-        event_details_list = []
-        for event in events:
-            event_details = {}
-            event_name = event.event_name
-            start_date = event.start_date
-            end_date = event.end_date
-            inventory = event.inventory
-            tickets = Tickets.objects.filter(sno=event)
-            tickets_sold = tickets.count()
-            revenue = sum([ticket.price for ticket in tickets])
-            event_details = {'Name':event_name,
-                             'Start_Date':date_to_string([str(start_date)]),
-                             'End_Date':date_to_string([str(end_date)]),
-                             'Tickets_Sold':tickets_sold,
-                             'Inventory': inventory,
-                             'Revenue':revenue}
-            event_details_list.append(event_details)
-        print (event_details_list)
-        context = {'Events':event_details_list}
-        return HttpResponse("200")
-        #return render(request,"core/customers.html",context)
+        #event = Events.objects.get(event_id = event_id)
+        event = Events.objects.all()[0]
+        tickets = Tickets.objects.filter(sno = event)
+        i = 1
+        for ticket in tickets:
+            customers = Customers.objects.filter(sno = ticket)
+            for customer in customers:
+
+                customer_details = {'Sno':i,
+                                    'Name':customer.customer_name,
+                                    'Email':customer.customer_email,
+                                    'Number':customer.customer_number,
+                                    'Category':ticket.type}
+                i+=1
+                customers_list.append(customer_details)
+        return render(request,"core/customers.html",{"Customers":customers_list})
     except Exception:
         print(traceback.format_exc())
         return render(request,"core/error.html",{})
-
-def date_to_string(dates):
-    date = datetime.strptime(dates[0].split(" ")[0], '%Y-%m-%d')
-    date = str(date.strftime('%B %d, %Y'))
-    try:
-        if dates[1].split(" ")[0] != dates[0].split(" ")[0]:
-            date2 = datetime.strptime(dates[1].split(" ")[0], '%Y-%m-%d')
-            date2 = str(date2.strftime('%B %d, %Y'))
-            date = date + " - " + date2
-    except:
-        pass
-    return date
 
 # #To be used in Production
 # def dashboard1(request):
