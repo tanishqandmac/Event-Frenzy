@@ -14,7 +14,7 @@ import shopify
 import time
 import os
 
-def dashboard(request):
+def customers(request):
     try:
         Users.objects.all().delete()
         Events.objects.all().delete()
@@ -22,7 +22,7 @@ def dashboard(request):
         Customers.objects.all().delete()
         user = Users(domain_name="believer")
         user.save()
-        for i in range(5):
+        for i in range(10):
             user = Users.objects.get(domain_name = "believer")
             event = Events(sno = user,
                             event_name = "Dragons {}".format(i),
@@ -61,7 +61,7 @@ def dashboard(request):
             event_details_list.append(event_details)
         print (event_details_list)
         context = {'Events':event_details_list}
-        return render(request,"core/dashboard.html",context)
+        return render(request,"core/customers.html",context)
     except Exception:
         print(traceback.format_exc())
         return render(request,"core/error.html",{})
