@@ -1,4 +1,4 @@
-from .models import Users,Events,Tickets,Customers
+from .models import Users, Events, Tickets, Customers
 from django.views.decorators.csrf import csrf_exempt
 from shopify_auth.decorators import login_required
 from shopify_auth.models import AbstractShopUser, ShopUserManager
@@ -14,6 +14,7 @@ import shopify
 import time
 import os
 
+
 def dashboard(request):
     try:
         Users.objects.all().delete()
@@ -23,8 +24,8 @@ def dashboard(request):
         user = Users(domain_name="believer")
         user.save()
         for i in range(5):
-            user = Users.objects.get(domain_name = "believer")
-            event = Events(sno = user,
+            user = Users.objects.get(domain_name="believer")
+            event = Events(sno=user,
                             event_name = "Dragons {}".format(i),
                             start_date = "2019-01-28",
                             end_date = "2019-01-31")

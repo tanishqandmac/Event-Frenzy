@@ -4,6 +4,7 @@ from shopify_auth.decorators import login_required
 from shopify_auth.models import AbstractShopUser, ShopUserManager
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+import matplotlib.pyplot as plt
 from django.db.models import Sum
 from django.contrib import auth
 from datetime import datetime
@@ -22,23 +23,25 @@ def statistics(request):
         Customers.objects.all().delete()
         user = Users(domain_name="believer")
         user.save()
+        user = Users.objects.get(domain_name = "believer")
         for i in range(10):
-            user = Users.objects.get(domain_name = "believer")
             event = Events(sno = user,
                             event_name = "Dragons {}".format(i),
                             start_date = "2019-01-28",
                             end_date = "2019-01-31")
             event.save()
-            event = Events.objects.filter(sno = user)
-            tickets = Tickets(sno = event[i],
-                              type = "Platinum",
-                              price = 3000.0 + float(i))
-            tickets.save()
-            tickets = Tickets.objects.filter(sno = event[i])
-            customer = Customers(sno = tickets[0],
-                                customer_name = "tanishq",
-                                customer_email = "tanishqandmac@gmail.com")
-            customer.save()
+        events = Events.obejects.filter(sno=user)
+        for e in events:
+            for i in range(10):
+                tickets = Tickets(sno = e,
+                                type = "Platinum",
+                                price = 3000.0 + float(i))
+                tickets.save()
+                for k in range(10):
+                    customer = Customers(sno = tickets,
+                                        customer_name = "tanishq",
+                                        customer_email = "tanishqandmac@gmail.com")
+                    customer.save()
 
         #domain_name = str(request.user).split(".")[0]
         domain_name = "believer"
@@ -50,13 +53,23 @@ def statistics(request):
             event_name = event.event_name
             start_date = event.start_date
             end_date = event.end_date
+            inventory = event.inventory
             tickets = Tickets.objects.filter(sno=event)
             tickets_sold = tickets.count()
             revenue = sum([ticket.price for ticket in tickets])
+            
+            names='Tickets Sold', 'Inventory',
+            size=[tickets_sold,inventory-tickets_sold]
+            my_circle=plt.Circle( (0,0), 0.7, color='white')
+            plt.pie(size, labels=names, colors=['green','red'])
+            p=plt.gcf()
+            p.gca().add_artist(my_circle)
+
             event_details = {'Name':event_name,
                              'Start_Date':date_to_string([str(start_date)]),
                              'End_Date':date_to_string([str(end_date)]),
                              'Tickets_Sold':tickets_sold,
+                             'Inventory': inventory,
                              'Revenue':revenue}
             event_details_list.append(event_details)
         print (event_details_list)
