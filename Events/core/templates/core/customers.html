@@ -20,21 +20,14 @@
     </tr>
   </thead>
   <tbody>
+    {% for Customer in Customers %}
     <tr>
-      <td>1</td>
-      <td>Tanishq</td>
-      <td>tanishqandmac@gmail.com</td>
-      <td>9582750035</td>
-      <td>Gold</td>
+      <td>{{Customer.Sno}}</td>
+      <td>{{Customer.Name}}</td>
+      <td>{{Customer.Email}}</td>
+      <td>{{Customer.Number}}</td>
+      <td>{{Customer.Category}}</td>
       <td><center><a href = "{% url 'core:dashboard' %}" role="button" class="btn btn-primary btn-block">Resend Ticket</a><center></td>
-    </tr>
-    {% for Product in Products %}
-    <tr>
-      <td>{{Product.SKU}}</td>
-      <td>{{Product.Name}}</td>
-      <td>{{Product.Variant}}</td>
-      <td>{{Product.Quantity}}</td>
-      <td>{{Product.Quantity}}</td>
     </tr>
     {% endfor %}
   </tbody>
