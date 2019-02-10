@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.contrib import auth
 from datetime import datetime
 from django_rq import job
@@ -37,9 +37,10 @@ def statistics(request):
             for i in range(10):
                 tickets = Tickets(sno = e,
                                 type = "Platinum",
+                                date = "2019-01-28",
                                 price = 3000.0 + float(i))
                 tickets.save()
-                for k in range(10):
+                for k in range(1):
                     customer = Customers(sno = tickets,
                                         customer_name = "tanishq",
                                         customer_email = "tanishqandmac@gmail.com")
@@ -49,33 +50,38 @@ def statistics(request):
         domain_name = "believer"
         userObject = Users.objects.get(domain_name = domain_name)
         events = Events.objects.filter(sno = userObject)
-        event_details_list = []
-        for event in events:
-            event_details = {}
-            event_name = event.event_name
-            start_date = event.start_date
-            end_date = event.end_date
-            inventory = event.inventory
-            tickets = Tickets.objects.filter(sno=event)
-            tickets_sold = tickets.count()
-            revenue = sum([ticket.price for ticket in tickets])
-
-            names='Tickets Sold', 'Inventory',
-            size=[tickets_sold,inventory-tickets_sold]
-            my_circle=plt.Circle( (0,0), 0.7, color='white')
-            plt.pie(size, labels=names, colors=['green','red'])
-            p=plt.gcf()
-            p.gca().add_artist(my_circle)
-
-            event_details = {'Name':event_name,
-                             'Start_Date':date_to_string([str(start_date)]),
-                             'End_Date':date_to_string([str(end_date)]),
-                             'Tickets_Sold':tickets_sold,
-                             'Inventory': inventory,
-                             'Revenue':revenue}
-            event_details_list.append(event_details)
-        print (event_details_list)
-        context = {'Events':event_details_list}
+        event = events[0]
+        event_details = {}
+        event_name = event.event_name
+        start_date = event.start_date
+        end_date = event.end_date
+        inventory = event.inventory
+        tickets = Tickets.objects.filter(sno=event)
+        total_tickets_sold = tickets.count()
+        total_revenue = sum([ticket.price for ticket in tickets])
+###################
+        arr = Tickets.objects.values('date').annotate(revenue=Sum('price')).filter(sno=event).order_by('date')
+        ticket_type_sold = Tickets.objects.values('type').annotate(count=Count('ticket_id')).filter(sno=event).order_by('type')
+        # dates_list = [ticket.date for ticket in tickets]
+        # date_set = list(set(dates_list))
+        # revenue_by_date = [0 for i in range(len(date_set))]
+        # arr = []
+        # for t in tickets:
+        #     d = t.date
+        #     ind = date_set.index(d)
+        #     revenue_by_date[ind] += t.price
+        # for i in range(len(date_set)):
+        #     arr.append([str(date_set[i]),revenue_by_date[i]])
+########################
+        print (ticket_type_sold)
+        event_details = {'Name':event_name,
+                            'Start_Date':date_to_string([str(start_date)]),
+                            'End_Date':date_to_string([str(end_date)]),
+                            'Tickets_Sold':total_tickets_sold,
+                            'Inventory': inventory,
+                            'Revenue':total_revenue
+                            }
+        context = {'Events':event_details,'dataset':arr}
         return render(request,"core/statistics.html",context)
     except Exception:
         print(traceback.format_exc())

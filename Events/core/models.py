@@ -27,6 +27,7 @@ class Events(models.Model):
 class Tickets(models.Model):
     sno = models.ForeignKey(Events, on_delete=models.CASCADE)
     ticket_id = models.AutoField(primary_key=True)
+    date  = models.DateField(auto_now=False,auto_now_add=False,default="1997-01-23")
     type = models.CharField(max_length = 50)
     price = models.FloatField(default=0.0)
 
