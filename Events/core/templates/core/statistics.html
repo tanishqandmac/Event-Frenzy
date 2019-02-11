@@ -18,29 +18,30 @@
         <p class="card-text text-center">
           <strong>{{Event.Start_Date}} - {{Event.End_Date}}</strong>
           <br><br><br><br><br><br>
-          <div id="container"></div>
-          <script>
-            Highcharts.chart('container', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Titanic Survivors by Ticket Class'
-                },
-                xAxis: {
-                    
-                    categories: [
-                      {% for entry in dataset %}'{{ entry.date }}'{% if not forloop.last %}, {% endif %}{% endfor %}
-                    ]
-                },
-                series: [{
-                    data: [
-                      {% for entry in dataset %}{{ entry.revenue }}{% if not forloop.last %}, {% endif %}{% endfor %}
-                    ],
-                    color: 'green'
-                }]
-            });
-          </script>
+          <div id="main">
+            <script>
+              Highcharts.chart('main', {
+                  chart: {
+                      type: 'column'
+                  },
+                  title: {
+                      text: 'Titanic Survivors by Ticket Class'
+                  },
+                  xAxis: {
+                      
+                      categories: [
+                        {% for entry in dataset %}'{{ entry.date }}'{% if not forloop.last %}, {% endif %}{% endfor %}
+                      ]
+                  },
+                  series: [{
+                      data: [
+                        {% for entry in dataset %}{{ entry.revenue }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                      ],
+                      color: 'green'
+                  }]
+              });
+            </script>
+          </div>
           <br><br><br><br><br><br>
           <hr>
           <strong>Gross Sales </strong> <span class="float-right">$3030</span>
@@ -63,6 +64,30 @@
         <hr class="bg bg-info">
         <p class="card-text text-center">
           <strong>{{Event.Start_Date}} - {{Event.End_Date}}</strong>
+          <div id="types">
+            <script>
+              Highcharts.chart('types', {
+                  chart: {
+                      type: 'column'
+                  },
+                  title: {
+                      text: 'Titanic Survivors by Ticket Class'
+                  },
+                  xAxis: {
+                      
+                      categories: [
+                        {% for entry in typeTicket %}'{{ entry.type }}'{% if not forloop.last %}, {% endif %}{% endfor %}
+                      ]
+                  },
+                  series: [{
+                      data: [
+                        {% for entry in typeTicket %}{{ entry.count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                      ],
+                      color: 'green'
+                  }]
+              });
+            </script>
+          </div>
           <hr>
           <strong>Gold</strong> <span class="float-right">34/100</span>
           <hr>

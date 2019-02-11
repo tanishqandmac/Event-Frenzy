@@ -73,6 +73,8 @@ def statistics(request):
         # for i in range(len(date_set)):
         #     arr.append([str(date_set[i]),revenue_by_date[i]])
 ########################
+        print (arr)
+        print ("###########")
         print (ticket_type_sold)
         event_details = {'Name':event_name,
                             'Start_Date':date_to_string([str(start_date)]),
@@ -81,7 +83,7 @@ def statistics(request):
                             'Inventory': inventory,
                             'Revenue':total_revenue
                             }
-        context = {'Events':event_details,'dataset':arr}
+        context = {'Events':event_details,'dataset':arr,'typeTicket':ticket_type_sold}
         return render(request,"core/statistics.html",context)
     except Exception:
         print(traceback.format_exc())
